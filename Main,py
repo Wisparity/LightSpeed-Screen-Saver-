@@ -1,0 +1,108 @@
+import pygame
+import random
+import math
+#Boilerplate code
+pygame.init()
+gamescreen = pygame.display.set_mode((900,900))
+pygame.display.set_caption("Single Partcle Movement")
+clock = pygame.time.Clock()
+
+#Particle Setup
+xpos = [] # X position of particles 
+ypos = [] # Y position of particles=
+xVel = [] # X velocity
+yVel = [] # Y velocity
+speed = 2 # Constant Speed for all particles
+sizes = []
+colors = []
+# Create Particles
+for i in range(1000):
+    sizes.append(.5) 
+    xpos.append(450) # Start X at center
+    ypos.append(450) # Start Y at Center
+    #generate random velocities 
+    velX = random.uniform(-1,1)
+    velY = random.uniform (-1,1)
+    
+    # Calculate the magnitude fo the velocity vector
+    magnitude = math.sqrt(velX**2 + velY**2)
+    
+    # Normalize the velocity vector to have a constatn speed
+    if magnitude != 0:
+        normalizedVelX = speed *velX / magnitude
+        normalizedVelY = speed *velY / magnitude
+    else:
+        normalizedVelX = 0
+        normalizedVelY = 0
+    
+    xVel.append(normalizedVelX)
+    yVel.append(normalizedVelY)
+#Game loop!
+while True:
+    clock.tick(60)
+    # Create new Particles---------------
+    for i in range(1): # Adjust '1' to change number of particles created by each frame
+        if len(xpos) < 10: # Adjust '10' to change total number of particles
+            
+            # Get random velocity for new particles
+            velX = random.uniform (-1,1)
+            velY = random.uniform (-1,1)
+            
+            # Calculate magnitude
+            velX = random.uniform(-1,1)
+            velY = random.uniform(-1,1)
+            # Normalize the vector
+            if magnitude != 0:
+                normalizevelX = 2 * velX / magnitude # '2' is the speed
+                normalizevelY = 2 * velY / magnitude
+            else:
+                normalizevelX = 0
+                normalizevelY = 0
+            
+            #push numbers into lists
+            xpos.append(450)
+            ypos.append(450)
+            xVel.append(normlaizedVelX)
+            yVel.append(normlaizedVelY)
+            colors.append
+    
+    # Event handling----------------------
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            break
+    #Physics------------------------------
+    for i in range(1000):
+        # Update poistion
+        xpos[i] += xVel[i]
+        ypos[i] += yVel[i]
+        sizes[i] += 0.5
+   
+    
+        # Boundary checking
+        if xpos[i] <0 or xpos[i] > 900 or ypos[i] < 0 or ypos[i] > 900:
+            xpos[i]=450 # Reset X to center
+            ypos[i]=450 # Reset Y to center
+            sizes[i]=1
+        
+            # Generate new random velocites
+            velX = random.uniform(-1,1)
+            velY = random.uniform(-1,1)
+            # Recalculate the magnitude of the velocity vector
+            magnitude = math.sqrt(velX**2 + velY**2)
+            
+            # Normalize the velocity vector to maintain constatn speed
+            if magnitude !=0:
+                xVel[i] = speed * velX / magnitude
+                yVel[i] = speed * velY / magnitude
+            else:
+                xvel[i] = 0
+                yvel[i] = 0
+    # Render section---------------------
+    gamescreen.fill((0,0,0))
+    for i in range (1000):
+        #Draw each particle as a white
+        pygame.draw.circle(gamescreen,(255,255,255), (xpos[i], ypos[i]), int(sizes[i]))
+    pygame.display.flip()
+    
+#End of Gameloop
+pygame.quit()
